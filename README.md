@@ -20,3 +20,6 @@ A collection of Spark route extensions designed to provide marshalling/unmarshal
             }
         })
 ```
+
+## TODO
+Add support for XML marshalling/unmarshalling
