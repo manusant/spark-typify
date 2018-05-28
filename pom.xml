@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.beerboy.spark</groupId>
     <artifactId>spark-typify</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <packaging>jar</packaging>
 
     <prerequisites>
@@ -31,7 +31,7 @@
         <url>https://github.com/manusant/spark-typify.git</url>
         <connection>scm:git:ssh://git@github.com:manusant/spark-typify.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:manusant/spark-typify.git</developerConnection>
-        <tag>spark-typify-1.0.0.0</tag>
+        <tag>spark-typify-1.0.0.1</tag>
     </scm>
 
     <issueManagement>
