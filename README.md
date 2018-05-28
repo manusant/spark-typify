@@ -36,7 +36,7 @@ Add this entry to your *build.gradle* file
 ```
 And add the dependency
 ```groovy
-  compile 'com.beerboy.spark:spark-typify:1.0.0.2'
+  compile 'com.beerboy.spark:spark-typify:1.0.0.3'
 ```
 ### Maven
 Add this to *dependencyManagement* section of your *pom.xml* 
@@ -59,6 +59,6 @@ And add the dependency
  <dependency>
   <groupId>com.beerboy.spark</groupId>
   <artifactId>spark-typify</artifactId>
-  <version>1.0.0.2</version>
+  <version>1.0.0.3</version>
  </dependency>
 ```
