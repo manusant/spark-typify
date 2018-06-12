@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 /**
  * @author manusant
  */
-public class GsonProvider {
+public class TypifyProvider {
 
     private static Gson GSON;
 

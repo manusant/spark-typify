@@ -1,9 +1,8 @@
 package com.beerboy.spark.typify.route;
 
-import com.beerboy.spark.typify.provider.GsonProvider;
+import com.beerboy.spark.typify.provider.TypifyProvider;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -11,7 +10,9 @@ import java.lang.reflect.ParameterizedType;
  * @author manusant
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public abstract class TypedGsonRoute<T, R> implements Route, TypedRoute<T, R> {
+public abstract class Route implements spark.Route {
+
+    public abstract Object handle(Request request, Response response);
 
     @Override
     public Object handle(Request request, Response response) {
@@ -20,12 +21,17 @@ public abstract class TypedGsonRoute<T, R> implements Route, TypedRoute<T, R> {
                 .getGenericSuperclass())
                 .getActualTypeArguments()[0];
 
-        T requestObject = GsonProvider.gson().fromJson(request.body(), typeOfT);
+        try {
+            getClass().getMethod("handle");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        T requestObject = TypifyProvider.gson().fromJson(request.body(), typeOfT);
 
         // Set content type on response to application/json
-        R result = handleAndTransform(requestObject, request, response);
+        R result = handle(requestObject, request, response);
         if (result != null) {
-            return GsonProvider.gson().toJson(result);
+            return TypifyProvider.gson().toJson(result);
         }
         return null;
     }
