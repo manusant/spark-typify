@@ -3,7 +3,7 @@ package com.beerboy.spark.typify.annotation;
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER})
+@Target({ElementType.TYPE_USE, ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AsText {
+public @interface Xml {
 }

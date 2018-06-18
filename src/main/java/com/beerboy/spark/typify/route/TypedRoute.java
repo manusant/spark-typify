@@ -1,10 +1,14 @@
 package com.beerboy.spark.typify.route;
 
+import com.beerboy.spark.typify.annotation.Json;
+import com.beerboy.spark.typify.annotation.Xml;
 import com.beerboy.spark.typify.provider.TypifyProvider;
+import com.beerboy.spark.typify.spec.ContentType;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -13,21 +17,33 @@ import java.lang.reflect.ParameterizedType;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class TypedRoute<T, R> implements Route {
 
-    public abstract R handle(T body, Request request, Response response);
+    public abstract R onRequest(T body, Request request, Response response);
 
     @Override
     public Object handle(Request request, Response response) {
+        try {
+            Class<T> typeOfT = (Class<T>) ((ParameterizedType) getClass()
+                    .getGenericSuperclass())
+                    .getActualTypeArguments()[0];
 
-        Class<T> typeOfT = (Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass())
-                .getActualTypeArguments()[0];
+            T requestObject = TypifyProvider.gson().fromJson(request.body(), typeOfT);
 
-        T requestObject = TypifyProvider.gson().fromJson(request.body(), typeOfT);
+            Method method = getClass().getMethod("onRequest", Object.class, Request.class, Response.class);
 
-        // Set content type on response to application/json
-        R result = handle(requestObject, request, response);
-        if (result != null) {
-            return TypifyProvider.gson().toJson(result);
+            Json json = method.getAnnotation(Json.class);
+            Xml xml = method.getAnnotation(Xml.class);
+
+            // Set content type on response to application/json
+            R result = onRequest(requestObject, request, response);
+            if (json != null) {
+                response.type(ContentType.APPLICATION_JSON.getValue());
+                return TypifyProvider.gson().toJson(result);
+            } else if (xml != null) {
+                response.type(ContentType.APPLICATION_XML.getValue());
+                throw new UnsupportedOperationException("XML mapping not supported yet");
+            }
+        } catch (NoSuchMethodException | SecurityException e) {
+            // DO NOTHING
         }
         return null;
     }

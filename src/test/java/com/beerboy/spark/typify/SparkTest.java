@@ -1,22 +1,23 @@
 package com.beerboy.spark.typify;
 
-import com.beerboy.spark.typify.annotation.AsXml;
+import com.beerboy.spark.typify.annotation.Json;
+import com.beerboy.spark.typify.annotation.Xml;
+import com.beerboy.spark.typify.model.Card;
+import com.beerboy.spark.typify.route.Route;
 import com.beerboy.spark.typify.route.TypedRoute;
-import com.beerboy.spark.typify.routeX.Card;
 import com.beerboy.spark.typify.spec.ContentType;
 import io.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 import spark.Service;
 
 import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.HTML;
 import static io.restassured.http.ContentType.JSON;
+import static io.restassured.http.ContentType.XML;
 
 public class SparkTest {
 
@@ -34,11 +35,9 @@ public class SparkTest {
     public void test1() {
 
         spark.post("/xx", new TypedRoute<Card, Card>() {
-                    @Override
-                    @AsXml
-                    public Card handle(Card body, Request request, Response response) {
+                    @Json
+                    public Card onRequest(Card body, Request request, Response response) {
                         System.out.println("EXEC CardRoute");
-                        response.type(ContentType.APPLICATION_JSON.getValue());
                         return body;
                     }
                 }
@@ -58,11 +57,12 @@ public class SparkTest {
                 .statusCode(200);
     }
 
-   /** @Test
+    @Test
     public void test2() {
 
         spark.get("/", new Route() {
-            public @AsXml Object handle(Request request, Response response) {
+            @Xml
+            public Object onRequest(Request request, Response response) {
                 Card card = new Card();
                 card.setName("CARD X");
                 card.setType(1);
@@ -74,7 +74,7 @@ public class SparkTest {
                 .when()
                 .get("/")
                 .then()
-                .contentType(HTML)
-                .statusCode(200);
-    }*/
+                .contentType(XML)
+                .statusCode(500);
+    }
 }

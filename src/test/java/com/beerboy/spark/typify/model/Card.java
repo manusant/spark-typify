@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.routeX;
+package com.beerboy.spark.typify.model;
 
 public class Card {
     private String name;
