@@ -2,6 +2,7 @@ package com.beerboy.spark.typify.route;
 
 import com.beerboy.spark.typify.annotation.Json;
 import com.beerboy.spark.typify.annotation.Xml;
+import com.beerboy.spark.typify.exception.ReflectionExceptions;
 import com.beerboy.spark.typify.provider.TypifyProvider;
 import com.beerboy.spark.typify.spec.ContentType;
 import spark.Request;
@@ -43,7 +44,7 @@ public abstract class TypedRoute<T, R> implements Route {
                 throw new UnsupportedOperationException("XML mapping not supported yet");
             }
         } catch (NoSuchMethodException | SecurityException e) {
-            // DO NOTHING
+            ReflectionExceptions.handleReflectionException(e);
         }
         return null;
     }

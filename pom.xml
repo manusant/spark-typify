@@ -91,15 +91,6 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <dependencies>
 
         <dependency>
