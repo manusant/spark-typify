@@ -4,18 +4,18 @@ A collection of Spark route extensions designed to provide marshalling/unmarshal
 ## Examples
 ### Handle request and transform Response to Json
 ```java
-    .get("/", new GsonRoute() {
-          @Override
-          public Object handleAndTransform(Request request, Response response) {
+    .get("/", new Route() {
+          @Xml
+          public Object onRequest(Request request, Response response) {
               return ok(response, cardService.findAll());
           }
       })
 ```
 ### Handle request, transform request into a Java POJO and transform Response to Json
 ```java
-     .put("/", new TypedGsonRoute<Card, Card>() {
-            @Override
-            public Card handleAndTransform(Card body, Request request, Response response) {
+     .put("/", new TypedRoute<Card, Card>() {
+            @Json
+            public Card onRequest(Card body, Request request, Response response) {
                 return ok(response, cardService.update(11, body));
             }
         })
