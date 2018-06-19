@@ -15,8 +15,9 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 
+import static com.beerboy.spark.typify.model.RestResponse.ok;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.XML;
@@ -42,7 +43,7 @@ public class SparkTest {
                     @Json
                     public Card onRequest(Card body, Request request, Response response) {
                         System.out.println("EXEC CardRoute");
-                        return body;
+                        return ok(response, body);
                     }
                 }
         );
@@ -70,7 +71,7 @@ public class SparkTest {
                 Card card = new Card();
                 card.setName("CARD X");
                 card.setType(1);
-                return Arrays.asList(card);
+                return ok(response, Collections.singletonList(card));
             }
         });
 
@@ -85,9 +86,9 @@ public class SparkTest {
     @Test
     public void test3() {
 
-       TypifyProvider.setUp(IgnoreSpec.newBuilder()
-               .withIgnoreAnnotated(JsonIgnore.class)
-               ::build);
+        TypifyProvider.setUp(IgnoreSpec.newBuilder()
+                .withIgnoreAnnotated(JsonIgnore.class)
+                ::build);
 
         spark.get("/v1", new Route() {
             @Json
