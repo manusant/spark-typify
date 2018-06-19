@@ -3,9 +3,11 @@ package com.beerboy.spark.typify;
 import com.beerboy.spark.typify.annotation.Json;
 import com.beerboy.spark.typify.annotation.Xml;
 import com.beerboy.spark.typify.model.Card;
+import com.beerboy.spark.typify.model.JsonIgnore;
+import com.beerboy.spark.typify.provider.TypifyProvider;
 import com.beerboy.spark.typify.route.Route;
 import com.beerboy.spark.typify.route.TypedRoute;
-import com.beerboy.spark.typify.spec.ContentType;
+import com.beerboy.spark.typify.spec.IgnoreSpec;
 import io.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,6 +20,8 @@ import java.util.Arrays;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.XML;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 
 public class SparkTest {
 
@@ -76,5 +80,35 @@ public class SparkTest {
                 .then()
                 .contentType(XML)
                 .statusCode(500);
+    }
+
+    @Test
+    public void test3() {
+
+       TypifyProvider.setUp(IgnoreSpec.newBuilder()
+               .withIgnoreAnnotated(JsonIgnore.class)
+               ::build);
+
+        spark.get("/", new Route() {
+            @Json
+            public Object onRequest(Request request, Response response) {
+                Card card = new Card();
+                card.setName("CARD X");
+                card.setSurName("BAJORAS");
+                card.setType(1);
+                return card;
+            }
+        });
+
+        given()
+                .when()
+                .get("/")
+                .then()
+                .contentType(JSON)
+                .statusCode(200)
+                .assertThat()
+                .body("name", equalTo("CARD X"))
+                .body("type", equalTo(1))
+                .body("surName", nullValue());
     }
 }

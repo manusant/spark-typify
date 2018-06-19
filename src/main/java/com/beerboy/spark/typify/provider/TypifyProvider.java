@@ -6,6 +6,8 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.function.Supplier;
+
 /**
  * @author manusant
  */
@@ -13,11 +15,7 @@ public class TypifyProvider {
 
     private static Gson GSON;
 
-    public static Gson create() {
-        return create(null);
-    }
-
-    public static Gson create(IgnoreSpec ignoreSpec) {
+    private static Gson create(IgnoreSpec ignoreSpec) {
         GSON = new GsonBuilder()
                 .setPrettyPrinting()
                 .setExclusionStrategies(new ExclusionStrategy() {
@@ -35,10 +33,18 @@ public class TypifyProvider {
         return GSON;
     }
 
+    public static void setUp(Supplier<IgnoreSpec> ignoreSupplier) {
+        create(ignoreSupplier.get());
+    }
+
+    public static void setUp(IgnoreSpec ignore) {
+        create(ignore);
+    }
+
     public static Gson gson() {
         if (GSON == null) {
             // Create with default configs
-            create();
+            create(null);
         }
         return GSON;
     }
