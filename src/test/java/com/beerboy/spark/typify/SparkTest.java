@@ -38,7 +38,7 @@ public class SparkTest {
     @Test
     public void test1() {
 
-        spark.post("/xx", new TypedRoute<Card, Card>() {
+        spark.post("/", new TypedRoute<Card, Card>() {
                     @Json
                     public Card onRequest(Card body, Request request, Response response) {
                         System.out.println("EXEC CardRoute");
@@ -55,7 +55,7 @@ public class SparkTest {
                 .contentType(JSON)
                 .body(card)
                 .when()
-                .post("/xx")
+                .post("/")
                 .then()
                 .contentType(JSON)
                 .statusCode(200);
@@ -64,7 +64,7 @@ public class SparkTest {
     @Test
     public void test2() {
 
-        spark.get("/", new Route() {
+        spark.get("/v0", new Route() {
             @Xml
             public Object onRequest(Request request, Response response) {
                 Card card = new Card();
@@ -76,7 +76,7 @@ public class SparkTest {
 
         given()
                 .when()
-                .get("/")
+                .get("/v0")
                 .then()
                 .contentType(XML)
                 .statusCode(500);
@@ -89,7 +89,7 @@ public class SparkTest {
                .withIgnoreAnnotated(JsonIgnore.class)
                ::build);
 
-        spark.get("/", new Route() {
+        spark.get("/v1", new Route() {
             @Json
             public Object onRequest(Request request, Response response) {
                 Card card = new Card();
@@ -102,7 +102,7 @@ public class SparkTest {
 
         given()
                 .when()
-                .get("/")
+                .get("/v1")
                 .then()
                 .contentType(JSON)
                 .statusCode(200)
