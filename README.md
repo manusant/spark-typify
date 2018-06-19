@@ -20,7 +20,13 @@ A collection of Spark route extensions designed to provide marshalling/unmarshal
             }
         })
 ```
-
+## Specify Ignore/Exclude spec
+```java
+    TypifyProvider.setUp(IgnoreSpec.newBuilder()
+               .withIgnoreAnnotated(JsonIgnore.class)
+               .withIgnoreTypes(First.class,Second.class)
+               ::build);
+```
 ## TODO
 Add support for XML marshalling/unmarshalling
 
