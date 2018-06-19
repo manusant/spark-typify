@@ -34,6 +34,9 @@ public abstract class Route implements spark.Route {
                 } else if (xml != null) {
                     response.type(ContentType.APPLICATION_XML.getValue());
                     throw new UnsupportedOperationException("XML mapping not supported yet");
+                }else {
+                    response.type(ContentType.APPLICATION_JSON.getValue());
+                    return TypifyProvider.gson().toJson(result);
                 }
             }
         } catch (NoSuchMethodException | SecurityException e) {
