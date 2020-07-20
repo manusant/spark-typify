@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.exception;
+package io.github.manusant.spark.typify.exception;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;

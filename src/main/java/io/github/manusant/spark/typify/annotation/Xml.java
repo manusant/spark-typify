@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.annotation;
+package io.github.manusant.spark.typify.annotation;
 
 import java.lang.annotation.*;
 

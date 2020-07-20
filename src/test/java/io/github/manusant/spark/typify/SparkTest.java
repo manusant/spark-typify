@@ -1,13 +1,14 @@
-package com.beerboy.spark.typify;
+package io.github.manusant.spark.typify;
 
-import com.beerboy.spark.typify.annotation.Json;
-import com.beerboy.spark.typify.annotation.Xml;
-import com.beerboy.spark.typify.model.Card;
-import com.beerboy.spark.typify.model.JsonIgnore;
-import com.beerboy.spark.typify.provider.TypifyProvider;
-import com.beerboy.spark.typify.route.Route;
-import com.beerboy.spark.typify.route.TypedRoute;
-import com.beerboy.spark.typify.spec.IgnoreSpec;
+import io.github.manusant.spark.typify.annotation.Json;
+import io.github.manusant.spark.typify.annotation.Xml;
+import io.github.manusant.spark.typify.model.Card;
+import io.github.manusant.spark.typify.model.JsonIgnore;
+import io.github.manusant.spark.typify.provider.TypifyProvider;
+import io.github.manusant.spark.typify.route.Route;
+import io.github.manusant.spark.typify.route.TypedRoute;
+import io.github.manusant.spark.typify.spec.IgnoreSpec;
+import io.github.manusant.spark.typify.model.RestResponse;
 import io.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import spark.Service;
 
 import java.util.Collections;
 
-import static com.beerboy.spark.typify.model.RestResponse.ok;
+import static io.github.manusant.spark.typify.model.RestResponse.ok;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.XML;
@@ -43,7 +44,7 @@ public class SparkTest {
                     @Json
                     public Card onRequest(Card body, Request request, Response response) {
                         System.out.println("EXEC CardRoute");
-                        return ok(response, body);
+                        return RestResponse.ok(response, body);
                     }
                 }
         );
@@ -71,7 +72,7 @@ public class SparkTest {
                 Card card = new Card();
                 card.setName("CARD X");
                 card.setType(1);
-                return ok(response, Collections.singletonList(card));
+                return RestResponse.ok(response, Collections.singletonList(card));
             }
         });
 

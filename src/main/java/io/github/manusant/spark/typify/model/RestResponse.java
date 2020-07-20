@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.model;
+package io.github.manusant.spark.typify.model;
 
 /**
  * Created by manusant

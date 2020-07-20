@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.spec;
+package io.github.manusant.spark.typify.spec;
 
 public enum ContentType {
 

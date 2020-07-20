@@ -1,6 +1,6 @@
-package com.beerboy.spark.typify.provider;
+package io.github.manusant.spark.typify.provider;
 
-import com.beerboy.spark.typify.spec.IgnoreSpec;
+import io.github.manusant.spark.typify.spec.IgnoreSpec;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;

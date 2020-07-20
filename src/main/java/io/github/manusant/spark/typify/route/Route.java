@@ -1,10 +1,10 @@
-package com.beerboy.spark.typify.route;
+package io.github.manusant.spark.typify.route;
 
-import com.beerboy.spark.typify.annotation.Json;
-import com.beerboy.spark.typify.annotation.Xml;
-import com.beerboy.spark.typify.exception.ReflectionExceptions;
-import com.beerboy.spark.typify.provider.TypifyProvider;
-import com.beerboy.spark.typify.spec.ContentType;
+import io.github.manusant.spark.typify.annotation.Json;
+import io.github.manusant.spark.typify.annotation.Xml;
+import io.github.manusant.spark.typify.exception.ReflectionExceptions;
+import io.github.manusant.spark.typify.provider.TypifyProvider;
+import io.github.manusant.spark.typify.spec.ContentType;
 import spark.Request;
 import spark.Response;
 

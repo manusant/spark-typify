@@ -1,4 +1,4 @@
-package com.beerboy.spark.typify.spec;
+package io.github.manusant.spark.typify.spec;
 
 import com.google.gson.FieldAttributes;
 
